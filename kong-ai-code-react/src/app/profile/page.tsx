@@ -107,7 +107,7 @@ export default function ProfilePage() {
             <span className="text-xl font-bold text-gray-900 dark:text-white">AI代码妈妈</span>
           </Link>
           <div className="flex space-x-4">
-            <Link href="/pages/navigation/apps">
+            <Link href="/apps">
               <Button variant="ghost">应用列表</Button>
             </Link>
             <Button variant="outline" onClick={handleLogout}>
@@ -135,7 +135,7 @@ export default function ProfilePage() {
                   </Badge>
                 </div>
               </div>
-              <Link href="/pages/navigation/agent/create">
+              <Link href="/app/create">
                 <Button>
                   <Plus className="h-4 w-4 mr-2" />
                   创建应用
@@ -171,7 +171,7 @@ export default function ProfilePage() {
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       创建您的第一个应用，开始AI编程之旅吧！
                     </p>
-                    <Link href="/pages/navigation/agent/create">
+                    <Link href="/app/create">
                       <Button>
                         <Plus className="h-4 w-4 mr-2" />
                         创建应用
@@ -248,7 +248,7 @@ export default function ProfilePage() {
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
                       开始与AI对话，您的对话记录将显示在这里
                     </p>
-                    <Link href="/pages/navigation/apps">
+                    <Link href="/apps">
                       <Button>浏览应用</Button>
                     </Link>
                   </CardContent>

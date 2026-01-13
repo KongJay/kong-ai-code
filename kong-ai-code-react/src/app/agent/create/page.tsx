@@ -90,7 +90,7 @@ export default function AppCreatePage() {
             <span className="text-xl font-bold text-gray-900 dark:text-white">AI代码</span>
           </Link>
           <div className="flex space-x-4">
-            <Link href="/navigation/apps">
+            <Link href="/apps">
               <Button variant="ghost">应用列表</Button>
             </Link>
           </div>
@@ -105,7 +105,7 @@ export default function AppCreatePage() {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => router.push('/navigation/apps')}
+              onClick={() => router.push('/apps')}
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               返回
@@ -213,7 +213,7 @@ export default function AppCreatePage() {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => router.push('/navigation/apps')}
+                    onClick={() => router.push('/apps')}
                   >
                     取消
                   </Button>

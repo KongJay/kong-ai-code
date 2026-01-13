@@ -5,7 +5,7 @@ import { listMyAppVoByPage } from "@/api";
 import type { AppVO, AppQueryRequest } from "@/types/api";
 import { message } from "@/components/ui/toast";
 import { useUserStore } from "@/store";
-import { AppsEmptyState, AppsGrid, AppsPageHeader, AppsSearchBar } from "@/components/business/apps";
+import { AppsEmptyState, AppsGrid, AppsPageHeader, AppsSearchBar } from "./";
 
 export default function AppsPage() {
   const { loginUser } = useUserStore();

@@ -10,14 +10,12 @@ import { message } from "@/components/ui/toast";
 import { Button } from "@/components/ui/button";
 import { VisualEditor, type ElementInfo } from "@/lib/visualEditor";
 import { Loader2 } from "lucide-react";
-import {
-  ChatHeader,
-  MessageList,
-  SelectedElementInfo,
-  ChatInput,
-  PreviewPanel,
-  DeploySuccessBanner
-} from "@/app/components/app";
+import { ChatHeader } from "@/app/app/ChatHeader";
+import { MessageList } from "@/app/app/MessageList";
+import { SelectedElementInfo } from "@/app/app/SelectedElementInfo";
+import { ChatInput } from "@/app/app/ChatInput";
+import { PreviewPanel } from "@/app/app/PreviewPanel";
+import { DeploySuccessBanner } from "@/app/app/DeploySuccessBanner";
 
 // 获取预览 URL
 const getStaticPreviewUrl = (codeGenType: string, appId: string) => {
