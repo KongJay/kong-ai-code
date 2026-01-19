@@ -103,6 +103,14 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
   }
+
+  /* Tailwind CSS v4 cursor修复 - 恢复交互元素的手型指针游标 */
+  /* 由于Tailwind v4默认将按钮cursor从pointer改为了default，我们需要手动恢复 */
+  /* 这确保了按钮等交互元素在hover时显示pointer游标，提升用户体验 */
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 @layer base {

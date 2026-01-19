@@ -9,7 +9,9 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        // 默认按钮样式 - 使用深色主题，与整体设计风格一致
+        // 背景色: 深灰黑色 (#0d0d0d)，文字: 白色，悬停: 轻微透明效果
+        default: "bg-[#0d0d0d] text-white hover:bg-[#0d0d0d]/80",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -21,7 +23,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
+        sm: "h-8 w-8",
         lg: "h-11 rounded-md px-8",
         icon: "h-10 w-10",
       },
