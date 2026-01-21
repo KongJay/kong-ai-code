@@ -33,11 +33,21 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
   onSendMessage,
   onGoToFullChat
 }) => {
+  const [projectMode, setProjectMode] = React.useState(false);
   const showChatArea = messages.length > 0;
+
+  const handleSendMessage = () => {
+    if (projectMode && currentAppId) {
+      onGoToFullChat();
+      onSendMessage();
+    } else {
+      onSendMessage();
+    }
+  };
 
   return (
     <section className="mx-auto max-w-3xl px-4">
-      <div className="rounded-2xl border border-neutral-700/40 bg-[#1a1a1a] shadow-2xl shadow-black/50">
+<div className= "rounded-2xl border border-neutral-700/40 bg-[#1a1a1a] shadow-2xl shadow-black/50">
         {/* 顶部栏 */}
 
 
@@ -68,7 +78,8 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 
 
         {/* 输入区域 */}
-        <div className="mx-auto w-[730px] bg-[#18181b]   rounded-2xl px-2 py-1 border border-neutral-600/50">
+        <div className="mx-auto w-[730px]
+ bg-[#18181b]   rounded-2xl px-2 py-1 border border-neutral-600/50">
           <textarea
             value={inputValue}
             onChange={(e) => onInputChange(e.target.value)}
@@ -88,29 +99,24 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
           <div className="flex items-center justify-between  mt-4">
             {/* 左侧图标组 */}
             <div className="flex items-center gap-0.5">
-              <button className="p-1 text-neutral-500 hover:text-neutral-300 hover:bg-neutral-800/60 rounded-lg transition-colors">
-                <MessageSquare className="h-[18px] w-[18px]" />
-              </button>
-              <button className="p-1 text-neutral-500 hover:text-neutral-300 hover:bg-neutral-800/60 rounded-lg transition-colors">
-                <Copy className="h-[18px] w-[18px]" />
-              </button>
-              <button className="p-1 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/60 rounded-lg transition-colors">
-                <GitHubIcon />
-              </button>
-              <button className="p-1 text-sky-400 hover:text-sky-300 hover:bg-neutral-800/60 rounded-lg transition-colors">
-                <DockerIcon />
-              </button>
-              <button className="p-1 text-orange-400 hover:text-orange-300 hover:bg-neutral-800/60 rounded-lg transition-colors">
-                <Hexagon className="h-[18px] w-[18px]" />
+              <button
+                onClick={() => setProjectMode(!projectMode)}
+                className={`flex items-center gap-2 rounded-full pl-2 pr-2 py-1.5 text-sm transition-colors border ${
+                  projectMode
+                    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50'
+                    : 'bg-neutral-800/80 text-neutral-300 hover:bg-neutral-700/80 border-neutral-700/50'
+                }`}
+              >
+                <span className="text-[13px]">Project Mode</span>
               </button>
             </div>
 
             {/* 右侧控制组 */}
             <div className="flex justify-around  items-center gap-0.5">
               {/* 模型选择器 */}
-              <button className="flex items-center gap-2 rounded-full bg-neutral-800/80 pl-2 pr-2 py-1.5 text-sm text-neutral-300 hover:bg-neutral-700/80 transition-colors border border-neutral-700/50">
+              <button className="flex items-center gap-0.5 rounded-full bg-neutral-800/80 pl-2 pr-2 py-1.5 text-sm text-neutral-300 hover:bg-neutral-700/80 transition-colors border border-neutral-700/50">
                
-                <span className="text-[13px]">arch-base</span>
+                <span className="text-[12px]">ChatGPT5.2</span>
                 <ChevronDown className="h-[15px] w-[15px] text-neutral-500" />
               </button>
 
@@ -126,7 +132,7 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
 
               {/* 发送按钮 */}
               <button
-                onClick={onSendMessage}
+                onClick={handleSendMessage}
                 className={`p-1 rounded-full flex items-center justify-center transition-all ${
                   inputValue.trim() && !isCreating && !isGenerating
                     ? 'bg-neutral-100 text-neutral-900 hover:bg-white ring-2 ring-neutral-300/20'

@@ -59,9 +59,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <div className="flex h-16 items-center justify-center border-b">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="flex items-center gap-2 text-x text-muted-foreground">
           <Bot className="h-5 w-5 text-primary" />
-          <span>AI代码 · 登录</span>
+          <span>登录</span>
         </div>
       </div>
 
@@ -71,17 +71,17 @@ export default function LoginPage() {
             <div className="flex items-start justify-between gap-2">
               <div className="space-y-1">
                 <CardTitle className="text-lg">Login to your account</CardTitle>
-                <CardDescription>Enter your email below to login to your account</CardDescription>
+                <CardDescription>Enter your account below to login to your account</CardDescription>
               </div>
-              <Button variant="link" className=" text-black " asChild>
+              <Button variant="link" className=" text-black text-white" asChild>
                 <Link href="/user/register">Sign Up</Link>
               </Button>
             </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-              <div className="grid gap-2">
-                <Label htmlFor="userAccount">Email</Label>
+              <div className="grid gap-2 ">
+                <Label htmlFor="userAccount" className="text-white">Account</Label>
                 <Input
                   id="userAccount"
                   name="userAccount"
@@ -94,7 +94,7 @@ export default function LoginPage() {
               </div>
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="userPassword">Password</Label>
+                  <Label htmlFor="userPassword" className="text-white">Password</Label>
                   <a
                     href="#"
                     className="ml-auto inline-block text-sm underline-offset-4 hover:underline"

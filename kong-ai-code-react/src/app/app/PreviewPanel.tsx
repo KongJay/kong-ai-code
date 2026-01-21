@@ -22,8 +22,8 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({
   onIframeLoad
 }) => {
   return (
-    <div className="hidden lg:flex flex-1 flex-col border-l border-neutral-800">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800">
+    <div className="hidden lg:flex flex-1 flex-col border-l  bg-neutral-800 border-neutral-800">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800 ">
         <h3 className="text-sm font-medium text-slate-300">网站预览</h3>
         <div className="flex items-center gap-2">
           {isOwner && previewUrl ? (
@@ -59,7 +59,7 @@ export const PreviewPanel: React.FC<PreviewPanelProps> = ({
           )}
         </div>
       </div>
-      <div className="flex-1 bg-white">
+      <div className="flex-1 ">
         {!previewUrl && !isGenerating ? (
           <div className="flex flex-col items-center justify-center h-full text-neutral-500">
             <div className="text-4xl mb-4">🌐</div>

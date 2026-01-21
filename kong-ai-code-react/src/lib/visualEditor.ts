@@ -183,7 +183,7 @@ export class VisualEditor {
 
     /**
      * 等待 iframe 加载完成并注入编辑脚本的内部函数
-     * 仿照 Vue 版本的简洁实现：简单轮询等待 contentDocument 可用
+     * 简单轮询等待 contentDocument 可用
      */
     let attempts = 0
     const maxAttemptsBeforeFallback = 12 // 12 * 100ms = 1.2s

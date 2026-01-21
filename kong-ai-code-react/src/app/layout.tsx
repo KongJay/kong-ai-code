@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "AI代码 - AI驱动的代码生成平台",
+  title: "AI代码平台",
   description: "通过智能对话的方式，让AI理解你的需求并生成高质量的代码。支持多种编程语言和框架。",
   keywords: "AI, 代码生成, 编程助手, 对话式开发",
 };

@@ -59,7 +59,7 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ open }) => {
             <SidebarLink
               key={idx}
               link={link}
-              className={pathname === link.href ? "bg-emerald-500/20" : ""}
+              // className={pathname === link.href ? "bg-emerald-500/20" : ""}
             />
           ))}
         </div>

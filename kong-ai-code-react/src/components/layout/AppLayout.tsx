@@ -29,12 +29,12 @@ export function AppLayout({ children }: AppLayoutProps) {
       <main className="flex flex-1 flex-col overflow-hidden">
         <Navigation />
 
-        <div className="flex-1 overflow-auto">
+        <div className="flex-1 overflow-auto neutral-800-scroll">
           {children}
         </div>
 
         {/* 全局底部 Footer */}
-        <Footer />
+        {/* <Footer /> */}
       </main>
     </div>
   );

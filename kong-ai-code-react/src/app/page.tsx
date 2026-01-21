@@ -19,7 +19,6 @@ import type { ChatMessage } from "@/types/api"; // 聊天消息类型
 import { HeroSection, ChatSection, FeatureCards } from "@/components/business/home"; // 首页业务组件
 import { TerminalChat } from "@/components/ui/terminal";
 
-
 /**
  * 首页组件定义
  * 主要功能：提供用户界面让用户快速创建应用并开始AI对话
@@ -27,7 +26,7 @@ import { TerminalChat } from "@/components/ui/terminal";
 export default function Home() {
   // ===== 路由和状态管理 =====
   const router = useRouter(); // Next.js路由实例，用于页面跳转
-  const { loginUser } = useUserStore(); // 当前登录用户信息
+  const { loginUser, isLoading: isUserLoading } = useUserStore(); // 当前登录用户信息
 
   // ===== 表单和UI状态 =====
   const [inputValue, setInputValue] = useState(""); // 用户输入的需求描述
@@ -54,6 +53,18 @@ export default function Home() {
   };
 
   // ===== 副作用处理 =====
+
+  /**
+   * 组件挂载时检查登录状态
+   * 修复：只有明确未登录且状态已加载完成时才跳转
+   */
+  useEffect(() => {
+    // 等待用户状态加载完成
+    if (!isUserLoading && !loginUser) {
+      console.log('用户未登录，跳转到登录页');
+      router.push("/user/login");
+    }
+  }, [loginUser, isUserLoading, router]);
 
   /**
    * 监听消息变化，自动滚动到底部
@@ -278,6 +289,20 @@ export default function Home() {
 
   // ===== 渲染逻辑 =====
 
+  // 显示加载状态
+  if (isUserLoading) {
+    return (
+      <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center">
+        <div className="text-white">检查登录状态...</div>
+      </div>
+    );
+  }
+
+  // 如果未登录，显示空内容（useEffect 会处理跳转）
+  if (!loginUser) {
+    return null;
+  }
+
   return (
     /**
      * 根容器：深色主题背景，全屏高度
@@ -285,7 +310,7 @@ export default function Home() {
     <div className="min-h-screen bg-[#0d0d0d] text-slate-100">
 
       {/**
-       * 顶部导航栏下方的“对话框”（消息展示区）
+       * 顶部导航栏下方的"对话框"（消息展示区）
        * 仅在开始对话后展示，避免撑破外层：内部自带滚动条
        */}
       {showChatArea && (
@@ -334,13 +359,6 @@ export default function Home() {
           onSendMessage={handleCreateApp}    // 发送消息处理
           onGoToFullChat={goToFullChat}      // 跳转完整聊天
         />
-
-
-        {/**
-         * 功能卡片区域：展示平台特性
-         * 包含代码生成、对话迭代、部署分享等功能介绍
-         */}
-        <FeatureCards showChatArea={showChatArea} />
       </main>
     </div>
   );

@@ -394,7 +394,7 @@ export default function AppChatPage() {
 
   if (!app) {
     return (
-      <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center">
+      <div className="min-h-screen bg-[#0d0d0d] flex items-center justify-center ">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-slate-200 mb-4">应用不存在</h2>
           <Button onClick={() => router.push('/apps')} variant="outline">
@@ -406,7 +406,7 @@ export default function AppChatPage() {
   }
 
   return (
-    <div className="h-screen bg-[#0d0d0d] flex flex-col">
+    <div className="h-screen bg-neutral-800 flex flex-col neutral-800-scroll">
       <ChatHeader
         app={app}
         isOwner={isOwner}
@@ -420,9 +420,9 @@ export default function AppChatPage() {
       <DeploySuccessBanner deployedUrl={deployedUrl} />
 
       {/* 主内容区域 */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex  overflow-hidden">
         {/* 左侧聊天区域 */}
-        <div className="flex-1 flex flex-col min-w-0 lg:max-w-[50%]">
+        <div className="flex-1 flex  flex-col min-w-0 lg:max-w-[50%]">
           <MessageList
             messages={messages}
             isTyping={isGenerating}
@@ -461,7 +461,7 @@ export default function AppChatPage() {
               visualEditorRef.current.onIframeLoad();
             }
           }}
-        />
+       ></PreviewPanel>
       </div>
     </div>
   );

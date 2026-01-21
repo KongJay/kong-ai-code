@@ -25,7 +25,7 @@ export const MessageList: React.FC<MessageListProps> = ({
   messagesEndRef
 }) => {
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex-1 overflow-y-auto p-4 space-y-4 neutral-800-scroll">
       {/* 加载更多按钮 */}
       {hasMoreHistory && (
         <div className="text-center">
