@@ -120,7 +120,9 @@ export interface AppVO {
 }
 
 export interface AppAddRequest {
-  initPrompt: string;  // 应用初始化的 prompt（用户需求描述）
+  initPrompt: string;
+  mode: number;
+    // 应用初始化的 prompt（用户需求描述）
 }
 
 export interface AppUpdateRequest {

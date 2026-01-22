@@ -83,6 +83,14 @@ public class AiCodeGeneratorFacade {
         // 根据 appId 获取相应的 AI 服务实例
         AiCodeGeneratorService aiCodeGeneratorService = aiCodeGeneratorServiceFactory.getAiCodeGeneratorService(appId, codeGenTypeEnum);
         return switch (codeGenTypeEnum) {
+            case CHAT -> {
+                Flux<String> codeStream = aiCodeGeneratorService.generateHtmlCodeStream(userMessage);
+                yield processCodeStream(codeStream, CodeGenTypeEnum.CHAT, appId);
+            }
+            case AGENT -> {
+                Flux<String> codeStream = aiCodeGeneratorService.generateHtmlCodeStream(userMessage);
+                yield processCodeStream(codeStream, CodeGenTypeEnum.AGENT, appId);
+            }
             case HTML -> {
                 Flux<String> codeStream = aiCodeGeneratorService.generateHtmlCodeStream(userMessage);
                 yield processCodeStream(codeStream, CodeGenTypeEnum.HTML, appId);
@@ -157,9 +165,12 @@ public class AiCodeGeneratorFacade {
                 String completeCode = codeBuilder.toString();
                 // 使用执行器解析代码
                 Object parsedResult = CodeParserExecutor.executeParser(completeCode, codeGenType);
+                if(codeGenType.getValue().equals("html")||codeGenType.getValue().equals("multi_file")
+                    ||codeGenType.getValue().equals("vue_project")){
                 // 使用执行器保存代码
                 File saveDir = CodeFileSaverExecutor.executeSaver(parsedResult, codeGenType, appId);
                 log.info("保存成功，目录为：{}", saveDir.getAbsolutePath());
+                }
             } catch (Exception e) {
                 log.error("保存失败: {}", e.getMessage());
             }

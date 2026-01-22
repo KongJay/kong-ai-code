@@ -8,6 +8,10 @@ interface Links {
   label: string;
   href: string;
   icon: React.JSX.Element | React.ReactNode;
+  children?: Array<{
+    label: string;
+    href: string;
+  }>;
 }
 
 interface SidebarContextProps {
@@ -163,26 +167,77 @@ export const SidebarLink = ({
   className?: string;
 }) => {
   const { open, animate } = useSidebar();
-  return (
-    <a
-      href={link.href}
-      className={cn(
-        "flex items-center justify-start gap-2  group/sidebar py-2",
-        className
-      )}
-      {...props}
-    >
-      {link.icon}
+  const [isExpanded, setIsExpanded] = useState(false);
 
-      <motion.span
-        animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
-          opacity: animate ? (open ? 1 : 0) : 1,
+  const hasChildren = link.children && link.children.length > 0;
+
+  // 当侧边栏关闭时，自动收起下拉菜单
+  React.useEffect(() => {
+    if (!open) {
+      setIsExpanded(false);
+    }
+  }, [open]);
+
+  return (
+    <div className="group/sidebar">
+      <a
+        href={link.href}
+        className={cn(
+          "flex items-center justify-between gap-2 py-2 group/sidebar",
+          className
+        )}
+        {...props}
+        onClick={(e) => {
+          if (hasChildren) {
+            e.preventDefault();
+            setIsExpanded(!isExpanded);
+          }
         }}
-        className="text-white text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block p-0! m-0!"
       >
-        {link.label}
-      </motion.span>
-    </a>
+        <div className="flex items-center gap-2">
+          {link.icon}
+          <motion.span
+            animate={{
+              display: animate ? (open ? "inline-block" : "none") : "inline-block",
+              opacity: animate ? (open ? 1 : 0) : 1,
+            }}
+            className="text-white text-sm group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block p-0! m-0!"
+          >
+            {link.label}
+          </motion.span>
+        </div>
+        {hasChildren && (
+          <motion.span
+            animate={{
+              rotate: isExpanded ? 90 : 0,
+              opacity: animate ? (open ? 1 : 0) : 1,
+            }}
+            className="text-white text-sm"
+          >
+            
+          </motion.span>
+        )}
+      </a>
+      
+      {hasChildren && isExpanded && (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+    
+          className="ml-7 mt-1 space-y-1"
+        >
+          {link.children?.map((child, idx) => (
+            <a
+              key={idx}
+              href={child.href}
+              className="block py-1.5 text-sm text-neutral-300 hover:text-white  px-2 rounded"
+            >
+              {child.label}
+            </a>
+          ))}
+        </motion.div>
+      )}
+    </div>
   );
 };

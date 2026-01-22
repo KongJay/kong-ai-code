@@ -20,6 +20,7 @@ interface ChatSectionProps {
   onInputChange: (value: string) => void;
   onSendMessage: () => void;
   onGoToFullChat: () => void;
+  onModeChange: (mode: number) => void;
 }
 
 export const ChatSection: React.FC<ChatSectionProps> = ({
@@ -31,13 +32,27 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
   isGenerating,
   onInputChange,
   onSendMessage,
-  onGoToFullChat
+  onGoToFullChat,
+  onModeChange
 }) => {
-  const [projectMode, setProjectMode] = React.useState(false);
+  const [studioMode, setStudioMode] = React.useState(false);
+  const [agentMode, setAgentMode] = React.useState(false);
+  
   const showChatArea = messages.length > 0;
 
+  // 计算并同步 mode 值
+  React.useEffect(() => {
+    let mode = 0; // 默认 chat 模式
+    if (studioMode) {
+      mode = 1;
+    } else if (agentMode) {
+      mode = 2;
+    }
+    onModeChange(mode);
+  }, [studioMode, agentMode, onModeChange]);
+
   const handleSendMessage = () => {
-    if (projectMode && currentAppId) {
+    if (studioMode && currentAppId) {
       onGoToFullChat();
       onSendMessage();
     } else {
@@ -98,16 +113,26 @@ export const ChatSection: React.FC<ChatSectionProps> = ({
           {/* 底部工具栏 */}
           <div className="flex items-center justify-between  mt-4">
             {/* 左侧图标组 */}
-            <div className="flex items-center gap-0.5">
+            <div className="flex items-center gap-2">
               <button
-                onClick={() => setProjectMode(!projectMode)}
+                onClick={() => setStudioMode(!studioMode)}
                 className={`flex items-center gap-2 rounded-full pl-2 pr-2 py-1.5 text-sm transition-colors border ${
-                  projectMode
+                  studioMode
                     ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50'
                     : 'bg-neutral-800/80 text-neutral-300 hover:bg-neutral-700/80 border-neutral-700/50'
                 }`}
               >
-                <span className="text-[13px]">Project Mode</span>
+                <span className="text-[13px]">Studio</span>
+              </button>
+                  <button
+                onClick={() => setAgentMode(!agentMode)}
+                className={`flex items-center gap-2 rounded-full pl-2 pr-2 py-1.5 text-sm transition-colors border ${
+                  agentMode
+                    ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50'
+                    : 'bg-neutral-800/80 text-neutral-300 hover:bg-neutral-700/80 border-neutral-700/50'
+                }`}
+              >
+                <span className="text-[13px]">Agent</span>
               </button>
             </div>
 

@@ -28,6 +28,26 @@ public interface AiCodeGeneratorService {
     @SystemMessage(fromResource = "prompt/codegen-multi-file-system-prompt.txt")
     MultiFileCodeResult generateMultiFileCode(String userMessage);
 
+
+
+    /**
+     * 生成 CHAT 代码
+     *
+     * @param userMessage 用户提示词
+     * @return AI 的输出结果
+     */
+    @SystemMessage(fromResource = "prompt/chat-system-prompt.txt")
+    Flux<String> generateChatCodeStream(String userMessage);   
+    
+    
+    /**
+     * 生成 AGENT 代码
+     *
+     * @param userMessage 用户提示词
+     * @return AI 的输出结果
+     */
+    @SystemMessage(fromResource = "prompt/agent-system-prompt.txt")
+    Flux<String> generateAgentCodeStream(String userMessage);
     /**
      * 生成 HTML 代码
      *

@@ -22,7 +22,30 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ open }) => {
       ),
     },
     {
-      label: "Apps",
+      label: "Chat",
+      href: "/chat",
+      icon: (
+        <svg className="h-5 w-5 shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+      ),
+      children: [
+        {
+          label: "代码生成对话",
+          href: "/chat/1"
+        },
+        {
+          label: "前端布局讨论",
+          href: "/chat/2"
+        },
+        {
+          label: "API 设计咨询",
+          href: "/chat/3"
+        }
+      ]
+    },
+    {
+      label: "Studio",
       href: "/apps",
       icon: (
         <svg className="h-5 w-5 shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -31,8 +54,8 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({ open }) => {
       ),
     },
     {
-      label: "Create Agent",
-      href: "/app/create",
+      label: "Agents",
+      href: "/agents",
       icon: (
         <svg className="h-5 w-5 shrink-0 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />

@@ -33,6 +33,7 @@ export default function Home() {
   const [selectedModel, setSelectedModel] = useState("arch-base"); // 选择的AI模型（预留字段）
   const [isCreating, setIsCreating] = useState(false); // 是否正在创建应用
   const [isGenerating, setIsGenerating] = useState(false); // 是否正在生成代码
+  const [mode, setMode] = useState(0); // 模式：0=chat, 1=studio, 2=agent
 
   // ===== 聊天相关状态 =====
   const [messages, setMessages] = useState<ChatMessage[]>([]); // 聊天消息列表
@@ -128,7 +129,10 @@ export default function Home() {
     // ===== 第二阶段：创建应用 =====
     setIsCreating(true);
     try {
-      const res = await addApp({ initPrompt: userMessage });
+      const res = await addApp({ 
+        initPrompt: userMessage,
+        mode,
+       });
       const response = res as any; // API响应已在拦截器中解包
 
       if (response.code === 0 && response.data) {
@@ -358,6 +362,7 @@ export default function Home() {
           onInputChange={setInputValue}      // 输入变化处理
           onSendMessage={handleCreateApp}    // 发送消息处理
           onGoToFullChat={goToFullChat}      // 跳转完整聊天
+          onModeChange={setMode}             // 模式变化处理
         />
       </main>
     </div>
