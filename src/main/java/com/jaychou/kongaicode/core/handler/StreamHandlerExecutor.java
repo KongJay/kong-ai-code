@@ -39,6 +39,7 @@ public class StreamHandlerExecutor {
                     jsonMessageStreamHandler.handle(originFlux, chatHistoryService, appId, loginUser);
             case HTML, MULTI_FILE -> // 简单文本处理器不需要依赖注入
                     new SimpleTextStreamHandler().handle(originFlux, chatHistoryService, appId, loginUser);
+            case CHAT,AGENT ->  new SimpleTextStreamHandler().handle(originFlux, chatHistoryService, appId, loginUser);
         };
     }
 }
