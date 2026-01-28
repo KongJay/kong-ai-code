@@ -3,6 +3,7 @@ package com.jaychou.kongaicode.agent.app;
 import com.jaychou.kongaicode.agent.advisor.MyLoggerAdvisor;
 import com.jaychou.kongaicode.agent.rag.QueryRewriter;
 import jakarta.annotation.Resource;
+import org.springframework.ai.rag.advisor.RetrievalAugmentationAdvisor;
 import org.springframework.aop.Advisor;
 import org.springframework.stereotype.Component;
 import org.springframework.ai.chat.client.ChatClient;
@@ -119,7 +120,7 @@ public class TravelApp {
     private VectorStore travelAppVectorStore;
 
     @Resource
-    private Advisor travelAppRagCloudAdvisor;
+    private RetrievalAugmentationAdvisor travelAppRagCloudAdvisor;  // 修改这里！！！
 
     @Resource
     private VectorStore pgVectorVectorStore;

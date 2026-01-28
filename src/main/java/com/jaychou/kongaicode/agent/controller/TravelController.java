@@ -93,15 +93,15 @@ public class TravelController {
         return sseEmitter;
     }
 
-    /**
+    /**     
      * 流式调用 Manus 超级智能体
      *
      * @param message
      * @return
      */
-    @GetMapping("/manus/chat")
-    public SseEmitter doChatWithManus(String message) {
-   KongManus kongManus = new KongManus(allTools, dashscopeChatModel);
-        return kongManus.runStream(message);
+    @GetMapping(value = "/manus/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> doChatWithManus(String message) {
+        KongManus kongManus = new KongManus(allTools, dashscopeChatModel);
+        return kongManus.runFlux(message);
     }
 }

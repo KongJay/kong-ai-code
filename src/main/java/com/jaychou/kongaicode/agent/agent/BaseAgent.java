@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import com.jaychou.kongaicode.agent.agent.model.AgentState;
 
 import cn.hutool.core.util.StrUtil;
+import reactor.core.publisher.Flux;
 
 
 /**
@@ -176,6 +177,62 @@ public abstract class BaseAgent {
             log.info("SSE connection completed");
         });
         return sseEmitter;
+    }
+
+    /**
+     * 运行代理（Flux 流式输出）
+     *
+     * @param userPrompt 用户提示词
+     * @return 执行结果
+     */
+    public Flux<String> runFlux(String userPrompt) {
+        return Flux.create(sink -> {
+            try {
+                if (this.state != AgentState.IDLE) {
+                    sink.error(new RuntimeException("无法从状态运行代理：" + this.state));
+                    return;
+                }
+                if (StrUtil.isBlank(userPrompt)) {
+                    sink.error(new IllegalArgumentException("不能使用空提示词运行代理"));
+                    return;
+                }
+                
+                // 执行，更改状态
+                this.state = AgentState.RUNNING;
+                // 记录消息上下文
+                messageList.add(new UserMessage(userPrompt));
+                // 保存结果列表
+                List<String> results = new ArrayList<>();
+                
+                // 执行循环
+                for (int i = 0; i < maxSteps && state != AgentState.FINISHED; i++) {
+                    int stepNumber = i + 1;
+                    currentStep = stepNumber;
+                    log.info("Executing step {}/{}", stepNumber, maxSteps);
+                    // 单步执行
+                    String stepResult = step();
+                    String result = "Step " + stepNumber + ": " + stepResult;
+                    results.add(result);
+                    // 输出当前每一步的结果到 Flux
+                    sink.next(result);
+                }
+                // 检查是否超出步骤限制
+                if (currentStep >= maxSteps) {
+                    state = AgentState.FINISHED;
+                    results.add("Terminated: Reached max steps (" + maxSteps + ")");
+                    sink.next("执行结束：达到最大步骤（" + maxSteps + "）");
+                }
+                // 正常完成
+                sink.complete();
+            } catch (Exception e) {
+                state = AgentState.ERROR;
+                log.error("error executing agent", e);
+                sink.error(e);
+            } finally {
+                // 清理资源
+                this.cleanup();
+            }
+        });
     }
 
     /**

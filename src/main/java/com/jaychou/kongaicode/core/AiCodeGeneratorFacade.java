@@ -1,6 +1,8 @@
 package com.jaychou.kongaicode.core;
 
 import cn.hutool.json.JSONUtil;
+
+import com.jaychou.kongaicode.agent.agent.KongManus;
 import com.jaychou.kongaicode.ai.AiCodeGeneratorService;
 import com.jaychou.kongaicode.ai.AiCodeGeneratorServiceFactory;
 import com.jaychou.kongaicode.ai.model.HtmlCodeResult;
@@ -20,6 +22,9 @@ import dev.langchain4j.service.TokenStream;
 import dev.langchain4j.service.tool.ToolExecution;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.tool.ToolCallback;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
@@ -38,6 +43,11 @@ public class AiCodeGeneratorFacade {
     @Resource
     private VueProjectBuilder vueProjectBuilder;
 
+    @Resource
+    private ToolCallback[] allTools;
+
+    @Resource
+    private ChatModel dashscopeChatModel;
     /**
      * 统一入口：根据类型生成并保存代码
      *
@@ -88,8 +98,8 @@ public class AiCodeGeneratorFacade {
                 yield processCodeStream(codeStream, CodeGenTypeEnum.CHAT, appId);
             }
             case AGENT -> {
-                Flux<String> codeStream = aiCodeGeneratorService.generateHtmlCodeStream(userMessage);
-                yield processCodeStream(codeStream, CodeGenTypeEnum.AGENT, appId);
+                KongManus kongManus = new KongManus(allTools, dashscopeChatModel);
+                yield kongManus.runFlux(userMessage);
             }
             case HTML -> {
                 Flux<String> codeStream = aiCodeGeneratorService.generateHtmlCodeStream(userMessage);
